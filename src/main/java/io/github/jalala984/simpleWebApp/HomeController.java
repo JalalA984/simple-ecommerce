@@ -1,4 +1,4 @@
-package io.github.jalala984.simpleWebApp.controller;
+package io.github.jalala984.simpleWebApp;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

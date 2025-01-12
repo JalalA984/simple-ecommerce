@@ -37,4 +37,7 @@ public class ProductService {
                 });
     }
 
+    public void deleteProduct(int prodId) {
+        products.removeIf(p -> p.getProdId() == prodId);
+    }
 }

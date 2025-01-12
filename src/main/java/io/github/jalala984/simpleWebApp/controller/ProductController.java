@@ -3,8 +3,7 @@ package io.github.jalala984.simpleWebApp.controller;
 import io.github.jalala984.simpleWebApp.model.Product;
 import io.github.jalala984.simpleWebApp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,8 +13,18 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @RequestMapping("/products")
+    @GetMapping("/products")
     public List<Product> getProducts() {
         return service.getProducts();
+    }
+
+    @GetMapping("/products/{prodId}")
+    public Product getProductById(@PathVariable int prodId) {
+        return service.getProductById(prodId);
+    }
+
+    @PostMapping("/products")
+    public void addProduct(@RequestBody Product prod) {
+        service.addProduct(prod);
     }
 }

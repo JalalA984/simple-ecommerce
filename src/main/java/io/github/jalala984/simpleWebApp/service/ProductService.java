@@ -27,4 +27,14 @@ public class ProductService {
     }
 
 
+    public void updateProduct(Product prod) {
+        products.stream()
+                .filter(p -> p.getProdId() == prod.getProdId())
+                .findFirst()
+                .ifPresent(existingProduct -> {
+                    existingProduct.setProdName(prod.getProdName());
+                    existingProduct.setProdCost(prod.getProdCost());
+                });
+    }
+
 }

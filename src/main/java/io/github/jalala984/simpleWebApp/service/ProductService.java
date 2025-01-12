@@ -1,6 +1,8 @@
 package io.github.jalala984.simpleWebApp.service;
 
 import io.github.jalala984.simpleWebApp.model.Product;
+import io.github.jalala984.simpleWebApp.repository.ProductRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,34 +12,29 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    List<Product> products = new ArrayList<>(Arrays.asList(new Product(101, "Iphone", 800), new Product(102, "Canon Camera", 300),new Product(103,"Shure Mic",900)));
+    @Autowired
+    ProductRepo repo;
+
+    // List<Product> products = new ArrayList<>(Arrays.asList(new Product(101, "Iphone", 800), new Product(102, "Canon Camera", 300),new Product(103,"Shure Mic",900)));
 
     public List<Product> getProducts() {
-        return products;
+        return repo.findAll();
     }
 
     public Product getProductById(int prodId) {
-        return products.stream()
-                .filter(prod -> prod.getProdId() == prodId)
-                .findFirst().orElse(new Product(100, "No Item", 0));
+        return repo.findById(prodId).orElse(new Product());
     }
 
     public void addProduct(Product prod) {
-        products.add(prod);
+        repo.save(prod);
     }
 
 
     public void updateProduct(Product prod) {
-        products.stream()
-                .filter(p -> p.getProdId() == prod.getProdId())
-                .findFirst()
-                .ifPresent(existingProduct -> {
-                    existingProduct.setProdName(prod.getProdName());
-                    existingProduct.setProdCost(prod.getProdCost());
-                });
+        repo.save(prod);
     }
 
     public void deleteProduct(int prodId) {
-        products.removeIf(p -> p.getProdId() == prodId);
+        repo.deleteById(prodId);
     }
 }
